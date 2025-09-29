@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TitLiquid - The Blockchain Trading Platform</title>
+    <title>TitLiquid - The Blockchain for Tit-Related Finance</title>
+    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png">
     <style>
         * {
             margin: 0;
@@ -16,6 +17,67 @@
             background: #0a0a0a;
             color: #ffffff;
             overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loadingScreen.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-gif {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 2rem;
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            color: #ff69b4;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .loading-bar-container {
+            width: 300px;
+            height: 4px;
+            background: #1a1a1a;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff1493, #ff69b4);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        #mainContent {
+            opacity: 0;
+            filter: blur(20px);
+            transition: opacity 0.8s ease, filter 0.8s ease;
+        }
+
+        #mainContent.show {
+            opacity: 1;
+            filter: blur(0);
         }
 
         .navbar {
@@ -34,16 +96,6 @@
             border-radius: 50px;
             z-index: 1000;
             border: 1px solid rgba(255, 105, 180, 0.1);
-        }
-
-        .hero-buttons .btn-primary {
-            padding: 0.85rem 2rem;
-            font-size: 1rem;
-            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.4);
-        }
-
-        .hero-buttons .btn-primary:hover {
-            box-shadow: 0 12px 40px rgba(255, 20, 147, 0.6);
         }
 
         .logo {
@@ -135,7 +187,7 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 25%;
+            top: 20%;
             left: 50%;
             transform: translateX(-50%);
             width: 1000px;
@@ -193,62 +245,6 @@
             50% { transform: translateY(-20px); }
         }
 
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a0a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loading-gif {
-            width: 200px;
-            height: 200px;
-            margin-bottom: 2rem;
-        }
-
-        .loading-text {
-            font-size: 1.5rem;
-            color: #ff69b4;
-            font-weight: 600;
-        }
-
-        .loading-dots {
-            display: inline-block;
-            width: 40px;
-            text-align: left;
-        }
-
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60% { content: '...'; }
-            80% { content: '..'; }
-            100% { content: '.'; }
-        }
-
-        .content-wrapper {
-            filter: blur(10px);
-            transition: filter 0.5s ease;
-        }
-
-        .content-wrapper.loaded {
-            filter: blur(0);
-        }
-
         h1 {
             font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 700;
@@ -272,6 +268,16 @@
             gap: 1rem;
             flex-wrap: wrap;
             justify-content: center;
+        }
+
+        .hero-buttons .btn-primary {
+            padding: 0.85rem 2rem;
+            font-size: 1rem;
+            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .hero-buttons .btn-primary:hover {
+            box-shadow: 0 12px 40px rgba(255, 20, 147, 0.6);
         }
 
         .btn-secondary {
@@ -501,94 +507,132 @@
 </head>
 <body>
     <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
+    <div id="loadingScreen">
         <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68daac4442c8b5ff897c7e21_c_755078_Ev7QQ%20(1).gif" alt="Loading" class="loading-gif">
-        <div class="loading-text">
-            Loading<span class="loading-dots" id="loadingDots">...</span>
+        <div class="loading-text">Loading<span id="loadingDots">...</span></div>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loadingBar"></div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="content-wrapper" id="contentWrapper">
-    <nav class="navbar">
-        <div class="logo">
-            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid" class="logo-icon">
-            TitLiquid
-        </div>
-        <div class="nav-center">
-            <div class="nav-links">
-                <a href="#features">EBTsystem</a>
+    <div id="mainContent">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid" class="logo-icon">
+                TitLiquid
             </div>
-        </div>
-        <a href="#" class="btn-primary">Launch App</a>
-    </nav>
+            <div class="nav-center">
+                <div class="nav-links">
+                    <a href="#features">EBTsystem</a>
+                </div>
+            </div>
+            <a href="#" class="btn-primary">Launch App</a>
+        </nav>
 
-    <section class="hero">
-        <div class="hero-icon">
-            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid">
-        </div>
-        <h1>The blockchain to house all<br>tit-related finance</h1>
-        <p>Trade & launch tokens on the same perky chain, by the busty foundation.</p>
-        <div class="hero-buttons">
-            <a href="#" class="btn-primary">Start Trading</a>
-            <a href="#" class="btn-secondary">Learn More</a>
-        </div>
-    </section>
+        <section class="hero">
+            <div class="hero-icon">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid">
+            </div>
+            <h1>The blockchain to house all<br>tit-related finance</h1>
+            <p>Trade & launch tokens on the same perky chain, by the busty foundation.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">Start Trading</a>
+                <a href="#" class="btn-secondary">Learn More</a>
+            </div>
+        </section>
 
-    <section class="section" id="platform">
-        <div class="section-header">The Flagship Application</div>
-        <h2 class="section-title">The premier double-D exchange</h2>
-        
-        <div class="features">
-            <div class="feature">
-                <h3>Low fees</h3>
-                <p>All fees go back to supporting the twins</p>
+        <section class="section" id="platform">
+            <div class="section-header">The Flagship Application</div>
+            <h2 class="section-title">The premier double-D exchange</h2>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>Low fees</h3>
+                    <p>All fees go back to supporting the twins</p>
+                </div>
+                <div class="feature">
+                    <h3>Transparent</h3>
+                    <p>All transactions are upfront and center</p>
+                </div>
+                <div class="feature">
+                    <h3>All the coins</h3>
+                    <p>The biggest liquidity for your favorite assets</p>
+                </div>
+                <div class="feature">
+                    <h3>Fast settlement</h3>
+                    <p>Trade rapidly without any sag</p>
+                </div>
             </div>
-            <div class="feature">
-                <h3>Transparent</h3>
-                <p>All transactions are upfront and center</p>
-            </div>
-            <div class="feature">
-                <h3>All the coins</h3>
-                <p>The biggest liquidity for your favorite assets</p>
-            </div>
-            <div class="feature">
-                <h3>Fast settlement</h3>
-                <p>Trade rapidly without any sag</p>
-            </div>
-        </div>
 
-        <div class="platform-showcase">
-            <div class="platform-image">
-                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68daab4d751539fd89a4e4da_0b8fe9ae38d4101685c26ddb613dcc91.png" alt="TitLiquid Trading Platform">
+            <div class="platform-showcase">
+                <div class="platform-image">
+                    <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68daab4d751539fd89a4e4da_0b8fe9ae38d4101685c26ddb613dcc91.png" alt="TitLiquid Trading Platform">
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="section community-section" id="community">
-        <p style="color: #888; margin-bottom: 2rem;">No investors. No paid market makers. No fees to any company.</p>
-        <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 4rem;">Tits first.</h2>
-        
-        <div class="governance-box">
-            <p style="font-size: 0.9rem; margin-bottom: 2rem;">Anyone can support and secure</p>
-            <h3><span class="token-name">TitLiquid</span> through TL,<br>the rack's native token.</h3>
-            <p>Own a piece of the chest.</p>
-            <a href="#" class="btn-primary">Start Trading</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">Tit<span class="footer-logo-regular">Liquid</span></div>
-            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid" class="footer-icon">
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-year">2025</div>
-            <div class="footer-links">
-                <a href="#">Terms</a>
-                <a href="#">Privacy</a>
+        <section class="section community-section" id="community">
+            <p style="color: #888; margin-bottom: 2rem;">No investors. No paid market makers. No fees to any company.</p>
+            <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 4rem;">Tits first.</h2>
+            
+            <div class="governance-box">
+                <p style="font-size: 0.9rem; margin-bottom: 2rem;">Anyone can support and secure</p>
+                <h3><span class="token-name">TitLiquid</span> through TL,<br>the rack's native token.</h3>
+                <p>Own a piece of the chest.</p>
+                <a href="#" class="btn-primary">Start Trading</a>
             </div>
-        </div>
-    </footer>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">Tit<span class="footer-logo-regular">Liquid</span></div>
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid" class="footer-icon">
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-year">2025</div>
+                <div class="footer-links">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Loading animation
+        let progress = 0;
+        const loadingBar = document.getElementById('loadingBar');
+        const loadingDots = document.getElementById('loadingDots');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const mainContent = document.getElementById('mainContent');
+
+        // Animated dots
+        const dotStates = ['', '.', '..', '...', '..', '.'];
+        let dotIndex = 0;
+
+        const dotInterval = setInterval(() => {
+            loadingDots.textContent = dotStates[dotIndex];
+            dotIndex = (dotIndex + 1) % dotStates.length;
+        }, 200);
+
+        // Progress bar animation
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress >= 100) {
+                progress = 100;
+                loadingBar.style.width = '100%';
+                
+                setTimeout(() => {
+                    clearInterval(dotInterval);
+                    clearInterval(progressInterval);
+                    loadingScreen.classList.add('hide');
+                    mainContent.classList.add('show');
+                }, 300);
+            } else {
+                loadingBar.style.width = progress + '%';
+            }
+        }, 150);
+    </script>
 </body>
 </html>
