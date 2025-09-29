@@ -95,7 +95,23 @@
             align-items: center;
             text-align: center;
             padding: 2rem;
-            background: radial-gradient(ellipse at center, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
+            background: 
+                radial-gradient(ellipse 800px 600px at 50% 50%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 600px 400px at 30% 70%, rgba(138, 43, 226, 0.08) 0%, transparent 50%),
+                #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent, rgba(20, 20, 15, 0.8));
+            pointer-events: none;
         }
 
         .hero-icon {
@@ -160,6 +176,20 @@
         .section {
             padding: 8rem 5%;
             position: relative;
+            background: 
+                radial-gradient(ellipse 1000px 600px at 80% 20%, rgba(40, 30, 20, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse 800px 500px at 20% 80%, rgba(30, 25, 20, 0.3) 0%, transparent 60%),
+                #0a0a0a;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255, 105, 180, 0.2), transparent);
         }
 
         .section-header {
@@ -232,8 +262,23 @@
         }
 
         .community-section {
-            background: radial-gradient(ellipse at center, rgba(255, 105, 180, 0.05) 0%, transparent 70%);
+            background: 
+                radial-gradient(ellipse 900px 700px at 50% 50%, rgba(255, 105, 180, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 600px 400px at 70% 30%, rgba(138, 43, 226, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 800px 500px at 30% 70%, rgba(40, 30, 20, 0.3) 0%, transparent 60%),
+                #0a0a0a;
             text-align: center;
+            position: relative;
+        }
+
+        .community-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255, 105, 180, 0.2), transparent);
         }
 
         .governance-box {
@@ -268,6 +313,9 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 2rem;
+            background: 
+                radial-gradient(ellipse 600px 400px at 20% 50%, rgba(30, 25, 20, 0.3) 0%, transparent 60%),
+                #0a0a0a;
         }
 
         .footer-logo {
