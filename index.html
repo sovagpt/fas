@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TitLiquid - The Blockchain Trading Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(30, 30, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #d4c5a0;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #333;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .section {
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: #ffd700;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 5rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature p {
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .platform-showcase {
+            text-align: center;
+            margin: 5rem 0;
+        }
+
+        .platform-image {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .community-section {
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            text-align: center;
+        }
+
+        .governance-box {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        .governance-box h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .governance-box p {
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .token-name {
+            color: #ffd700;
+            font-weight: 700;
+        }
+
+        footer {
+            padding: 3rem 5%;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .section {
+                padding: 4rem 5%;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da802d35c8ff4b4f3916c4_image%20(4).png" alt="TitLiquid" class="logo-icon">
+            TitLiquid
+        </div>
+        <div class="nav-center">
+            <div class="nav-links">
+                <a href="#features">EBTsystem</a>
+            </div>
+        </div>
+        <a href="#" class="btn-primary">Launch App</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-icon"></div>
+        <h1>The blockchain to house all<br>tit-related finance</h1>
+        <p>Trade & launch tokens on the same perky chain, by the busty foundation.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-primary">Start Trading</a>
+            <a href="#" class="btn-secondary">Learn More</a>
+        </div>
+    </section>
+
+    <section class="section" id="platform">
+        <div class="section-header">The Flagship Application</div>
+        <h2 class="section-title">The premier double-D exchange</h2>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>Low fees</h3>
+                <p>All fees go back to supporting the twins</p>
+            </div>
+            <div class="feature">
+                <h3>Transparent</h3>
+                <p>All transactions are upfront and center</p>
+            </div>
+            <div class="feature">
+                <h3>All the coins</h3>
+                <p>The biggest liquidity for your favorite assets</p>
+            </div>
+            <div class="feature">
+                <h3>Fast settlement</h3>
+                <p>Trade rapidly without any sag</p>
+            </div>
+        </div>
+
+        <div class="platform-showcase">
+            <div class="platform-image">
+                <div class="chart-placeholder">Professional Trading Interface</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section community-section" id="community">
+        <p style="color: #888; margin-bottom: 2rem;">No investors. No paid market makers. No fees to any company.</p>
+        <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 4rem;">Tits first.</h2>
+        
+        <div class="governance-box">
+            <p style="font-size: 0.9rem; margin-bottom: 2rem;">Anyone can support and secure</p>
+            <h3><span class="token-name">TitLiquid</span> through TL,<br>the rack's native token.</h3>
+            <p>Own a piece of the chest.</p>
+            <a href="#" class="btn-primary">Start Trading</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">Tit<span style="font-weight: 300;">Liquid</span></div>
+        <div class="footer-links">
+            <a href="#">Docs</a>
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+        </div>
+    </footer>
+</body>
+</html>
