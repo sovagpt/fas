@@ -35,38 +35,98 @@
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
+        #loadingScreen::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(255, 105, 180, 0.3) 0%, rgba(255, 20, 147, 0.15) 40%, transparent 70%);
+            filter: blur(80px);
+            pointer-events: none;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
         #loadingScreen.hide {
             opacity: 0;
             visibility: hidden;
         }
 
+        .loading-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .loading-gif {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
             object-fit: contain;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.6)) drop-shadow(0 0 60px rgba(255, 20, 147, 0.4));
+            animation: floatGif 3s ease-in-out infinite;
+        }
+
+        @keyframes floatGif {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
         }
 
         .loading-text {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #ff69b4;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .loading-subtitle {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 2rem;
+            font-style: italic;
         }
 
         .loading-bar-container {
-            width: 300px;
-            height: 4px;
+            width: 350px;
+            height: 6px;
             background: #1a1a1a;
-            border-radius: 2px;
+            border-radius: 3px;
             overflow: hidden;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.1);
         }
 
         .loading-bar {
             height: 100%;
-            background: linear-gradient(90deg, #ff1493, #ff69b4);
+            background: linear-gradient(90deg, #ff1493, #ff69b4, #ff1493);
+            background-size: 200% 100%;
             width: 0%;
-            transition: width 0.1s linear;
+            transition: width 0.2s ease-out;
+            animation: shimmer 2s linear infinite;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .loading-percentage {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #ff69b4;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
         #mainContent {
@@ -508,10 +568,14 @@
 <body>
     <!-- Loading Screen -->
     <div id="loadingScreen">
-        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68daac4442c8b5ff897c7e21_c_755078_Ev7QQ%20(1).gif" alt="Loading" class="loading-gif">
-        <div class="loading-text">Loading<span id="loadingDots">...</span></div>
-        <div class="loading-bar-container">
-            <div class="loading-bar" id="loadingBar"></div>
+        <div class="loading-content">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68daac4442c8b5ff897c7e21_c_755078_Ev7QQ%20(1).gif" alt="Loading" class="loading-gif">
+            <div class="loading-text">Loading<span id="loadingDots">...</span></div>
+            <div class="loading-subtitle">Preparing your tits...</div>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+            <div class="loading-percentage" id="loadingPercentage">0%</div>
         </div>
     </div>
 
@@ -604,6 +668,7 @@
         let progress = 0;
         const loadingBar = document.getElementById('loadingBar');
         const loadingDots = document.getElementById('loadingDots');
+        const loadingPercentage = document.getElementById('loadingPercentage');
         const loadingScreen = document.getElementById('loadingScreen');
         const mainContent = document.getElementById('mainContent');
 
@@ -616,23 +681,29 @@
             dotIndex = (dotIndex + 1) % dotStates.length;
         }, 200);
 
-        // Progress bar animation
-        const progressInterval = setInterval(() => {
-            progress += Math.random() * 15;
-            if (progress >= 100) {
-                progress = 100;
-                loadingBar.style.width = '100%';
+        // Smooth progress bar animation with delay
+        setTimeout(() => {
+            const progressInterval = setInterval(() => {
+                // More consistent increments
+                progress += 3 + Math.random() * 4;
                 
-                setTimeout(() => {
-                    clearInterval(dotInterval);
-                    clearInterval(progressInterval);
-                    loadingScreen.classList.add('hide');
-                    mainContent.classList.add('show');
-                }, 300);
-            } else {
-                loadingBar.style.width = progress + '%';
-            }
-        }, 150);
+                if (progress >= 100) {
+                    progress = 100;
+                    loadingBar.style.width = '100%';
+                    loadingPercentage.textContent = '100%';
+                    
+                    setTimeout(() => {
+                        clearInterval(dotInterval);
+                        clearInterval(progressInterval);
+                        loadingScreen.classList.add('hide');
+                        mainContent.classList.add('show');
+                    }, 400);
+                } else {
+                    loadingBar.style.width = progress + '%';
+                    loadingPercentage.textContent = Math.floor(progress) + '%';
+                }
+            }, 100);
+        }, 300);
     </script>
 </body>
 </html>
