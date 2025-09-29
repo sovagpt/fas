@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/app", "destination": "/app.html" },
+    { "source": "/docs", "destination": "/docs.html" },
+    { "source": "/referral", "destination": "/referral.html" }
+  ],
+  "cleanUrls": true
+}
