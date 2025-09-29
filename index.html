@@ -257,30 +257,39 @@
         }
 
         .hero::before {
-            content: '';
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1000px;
-            height: 700px;
-            background: radial-gradient(ellipse, rgba(255, 105, 180, 0.4) 0%, rgba(255, 20, 147, 0.25) 25%, rgba(138, 43, 226, 0.15) 50%, transparent 70%);
-            filter: blur(100px);
-            pointer-events: none;
-            z-index: 0;
-            animation: heroGlow 8s ease-in-out infinite;
-        }
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(
+        circle at 30% 50%, 
+        rgba(255, 105, 180, 0.6) 0%, 
+        rgba(255, 20, 147, 0.4) 20%, 
+        transparent 50%
+    ),
+    radial-gradient(
+        circle at 70% 50%, 
+        rgba(255, 105, 180, 0.6) 0%, 
+        rgba(255, 20, 147, 0.4) 20%, 
+        transparent 50%
+    );
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    animation: spinGlow 8s linear infinite;
+}
 
-        @keyframes heroGlow {
-            0%, 100% {
-                transform: translateX(-50%) scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: translateX(-50%) scale(1.1);
-                opacity: 0.8;
-            }
-        }
+@keyframes spinGlow {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
 
         .hero::after {
             content: '';
