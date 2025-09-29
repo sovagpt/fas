@@ -36,6 +36,16 @@
             border: 1px solid rgba(255, 105, 180, 0.1);
         }
 
+        .hero-buttons .btn-primary {
+            padding: 0.85rem 2rem;
+            font-size: 1rem;
+            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .hero-buttons .btn-primary:hover {
+            box-shadow: 0 12px 40px rgba(255, 20, 147, 0.6);
+        }
+
         .logo {
             font-size: 1.2rem;
             font-weight: 600;
@@ -47,16 +57,6 @@
         .logo-icon {
             width: 28px;
             height: 28px;
-        }
-
-        .hero-buttons .btn-primary {
-            padding: 0.85rem 2rem;
-            font-size: 1rem;
-            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.4);
-        }
-
-        .hero-buttons .btn-primary:hover {
-            box-shadow: 0 12px 40px rgba(255, 20, 147, 0.6);
         }
 
         .nav-center {
@@ -193,6 +193,62 @@
             50% { transform: translateY(-20px); }
         }
 
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-gif {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 2rem;
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            color: #ff69b4;
+            font-weight: 600;
+        }
+
+        .loading-dots {
+            display: inline-block;
+            width: 40px;
+            text-align: left;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80% { content: '..'; }
+            100% { content: '.'; }
+        }
+
+        .content-wrapper {
+            filter: blur(10px);
+            transition: filter 0.5s ease;
+        }
+
+        .content-wrapper.loaded {
+            filter: blur(0);
+        }
+
         h1 {
             font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 700;
@@ -307,22 +363,15 @@
         .platform-image {
             max-width: 900px;
             margin: 0 auto;
-            background: #1a1a1a;
             border-radius: 20px;
-            padding: 2rem;
+            overflow: hidden;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
-        .chart-placeholder {
+        .platform-image img {
             width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 1.2rem;
+            height: auto;
+            display: block;
         }
 
         .community-section {
@@ -451,6 +500,16 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68daac4442c8b5ff897c7e21_c_755078_Ev7QQ%20(1).gif" alt="Loading" class="loading-gif">
+        <div class="loading-text">
+            Loading<span class="loading-dots" id="loadingDots">...</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-wrapper" id="contentWrapper">
     <nav class="navbar">
         <div class="logo">
             <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid" class="logo-icon">
@@ -501,7 +560,7 @@
 
         <div class="platform-showcase">
             <div class="platform-image">
-                <div class="chart-placeholder">Professional Trading Interface</div>
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68daab4d751539fd89a4e4da_0b8fe9ae38d4101685c26ddb613dcc91.png" alt="TitLiquid Trading Platform">
             </div>
         </div>
     </section>
