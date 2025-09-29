@@ -40,6 +40,13 @@
             gap: 0.5rem;
             font-size: 1.1rem;
             font-weight: 600;
+            text-decoration: none;
+            color: #fff;
+            transition: opacity 0.3s;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
         }
 
         .logo-icon {
@@ -60,22 +67,25 @@
             height: 24px;
         }
 
-        .btn-home {
-            background: transparent;
+        .btn-connect-wallet {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
             color: #fff;
             padding: 0.6rem 1.2rem;
             border-radius: 8px;
-            border: 1px solid #2a2a2a;
+            border: none;
             font-weight: 600;
             cursor: pointer;
             font-size: 0.9rem;
             text-decoration: none;
             transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .btn-home:hover {
-            border-color: #ff69b4;
-            background: rgba(255, 105, 180, 0.1);
+        .btn-connect-wallet:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
         }
 
         .main-container {
@@ -274,15 +284,15 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">
+        <a href="https://titliquid.fun" class="logo">
             <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid" class="logo-icon">
             <span>titliquid</span>
-        </div>
+        </a>
         <div class="token-info">
             <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TL" class="token-icon">
             <span>$TL - TITLIQUID</span>
         </div>
-        <a href="/" class="btn-home">Home</a>
+        <button class="btn-connect-wallet">CONNECT WALLET</button>
     </nav>
 
     <div class="main-container">
