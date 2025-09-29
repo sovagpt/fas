@@ -33,7 +33,7 @@
             backdrop-filter: blur(10px);
             border-radius: 50px;
             z-index: 1000;
-            border: 1px solid rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 105, 180, 0.1);
         }
 
         .logo {
@@ -69,12 +69,12 @@
         }
 
         .nav-links a:hover {
-            color: #ffd700;
+            color: #ff69b4;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            color: #000;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: #fff;
             padding: 0.75rem 1.5rem;
             border-radius: 25px;
             text-decoration: none;
@@ -84,7 +84,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
         }
 
         .hero {
@@ -95,16 +95,20 @@
             align-items: center;
             text-align: center;
             padding: 2rem;
-            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
         }
 
         .hero-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            border-radius: 50%;
+            width: 120px;
+            height: 120px;
             margin-bottom: 2rem;
             animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         @keyframes float {
@@ -149,8 +153,8 @@
         }
 
         .btn-secondary:hover {
-            border-color: #ffd700;
-            background: rgba(255, 215, 0, 0.1);
+            border-color: #ff69b4;
+            background: rgba(255, 105, 180, 0.1);
         }
 
         .section {
@@ -163,7 +167,7 @@
             margin-bottom: 1rem;
             font-size: 0.9rem;
             letter-spacing: 2px;
-            color: #ffd700;
+            color: #ff69b4;
             text-transform: uppercase;
         }
 
@@ -228,7 +232,7 @@
         }
 
         .community-section {
-            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(255, 105, 180, 0.05) 0%, transparent 70%);
             text-align: center;
         }
 
@@ -236,8 +240,8 @@
             max-width: 800px;
             margin: 3rem auto;
             padding: 3rem;
-            background: rgba(255, 215, 0, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            background: rgba(255, 105, 180, 0.05);
+            border: 1px solid rgba(255, 105, 180, 0.2);
             border-radius: 20px;
         }
 
@@ -252,7 +256,7 @@
         }
 
         .token-name {
-            color: #ffd700;
+            color: #ff69b4;
             font-weight: 700;
         }
 
@@ -283,7 +287,7 @@
         }
 
         .footer-links a:hover {
-            color: #ffd700;
+            color: #ff69b4;
         }
 
         @media (max-width: 768px) {
@@ -316,7 +320,9 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-icon"></div>
+        <div class="hero-icon">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da802d35c8ff4b4f3916c4_image%20(4).png" alt="TitLiquid">
+        </div>
         <h1>The blockchain to house all<br>tit-related finance</h1>
         <p>Trade & launch tokens on the same perky chain, by the busty foundation.</p>
         <div class="hero-buttons">
