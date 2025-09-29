@@ -6,7 +6,6 @@
     <title>TitLiquid - The Blockchain for Tit-Related Finance</title>
     <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png">
     <style>
-        <style>
         * {
             margin: 0;
             padding: 0;
@@ -48,6 +47,17 @@
             filter: blur(80px);
             pointer-events: none;
             animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.8;
+            }
         }
 
         #loadingScreen.hide {
@@ -258,10 +268,10 @@
             filter: blur(100px);
             pointer-events: none;
             z-index: 0;
-            animation: pulseGlow 8s ease-in-out infinite;
+            animation: heroGlow 8s ease-in-out infinite;
         }
 
-        @keyframes pulseGlow {
+        @keyframes heroGlow {
             0%, 100% {
                 transform: translateX(-50%) scale(1);
                 opacity: 1;
@@ -312,17 +322,16 @@
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #fff;
         }
 
         .hero p {
             font-size: 1.1rem;
-            color: #888;
-            max-width: 600px;
+            color: #aaa;
+            max-width: 650px;
             margin: 0 auto 2.5rem;
+            line-height: 1.6;
+            font-weight: 400;
         }
 
         .hero-buttons {
@@ -567,7 +576,6 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
     </style>
 </head>
 <body>
