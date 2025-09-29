@@ -92,6 +92,75 @@
     align-items: center;
 }
 
+        /* Enhanced section backgrounds */
+.section {
+    position: relative;
+    overflow: hidden;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 105, 180, 0.2), transparent);
+}
+
+.section::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: -10%;
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 105, 180, 0.15), transparent);
+    transform: rotate(-15deg);
+    pointer-events: none;
+}
+
+/* Add decorative elements to specific sections */
+#platform::before {
+    content: '';
+    position: absolute;
+    bottom: 30%;
+    left: -5%;
+    width: 150px;
+    height: 150px;
+    border: 1px solid rgba(255, 105, 180, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.community-section::after {
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 5%;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 105, 180, 0.2), transparent);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+/* Add subtle grid pattern */
+.inspire-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(255, 105, 180, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 105, 180, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
 .loading-gif {
     width: 240px;
     height: 240px;
