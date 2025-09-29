@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBTsystem - TitLiquid</title>
+    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 1.5rem;
+            background: rgba(30, 30, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 105, 180, 0.1);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .btn-connect {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: #fff;
+            padding: 0.55rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 12px rgba(255, 20, 147, 0.25);
+        }
+
+        .btn-connect:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(255, 20, 147, 0.35);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 100px auto 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .referral-code {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .referral-link-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .referral-link {
+            color: #888;
+            font-size: 0.9rem;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: #fff;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .claim-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .claim-text {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .btn-claim {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: #fff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-claim:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+        }
+
+        .btn-claim:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .rewards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .reward-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 105, 180, 0.1);
+        }
+
+        .reward-name {
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .reward-points {
+            color: #888;
+            font-size: 0.9rem;
+            margin-right: 1rem;
+        }
+
+        .btn-redeem {
+            background: transparent;
+            color: #888;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .btn-redeem:hover {
+            border-color: #ff69b4;
+            color: #ff69b4;
+        }
+
+        .airdrop-note {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 80px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .claim-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68da8361387b613d073b4155_ChatGPT%20Image%20Sep%2029%2C%202025%2C%2001_59_38%20PM%20(2).png" alt="TitLiquid" class="logo-icon">
+            TitLiquid
+        </div>
+        <button class="btn-connect">Connect</button>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>EBTsystem</h1>
+            <p>Earn EBT Points by inviting friends. An NL airdrop may be useable via your EBT card.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">EBT Points</div>
+                <div class="stat-value" id="pointsDisplay">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Referral Code</div>
+                <div class="referral-code">TL7DQCUM</div>
+            </div>
+
+            <div class="stat-card" style="grid-column: span 2;">
+                <div class="stat-label">Referral Link</div>
+                <div class="referral-link-container">
+                    <div class="referral-link" id="referralLink">https://titliquid.fun?ref=TL7DQCUM</div>
+                    <button class="btn-copy" onclick="copyLink()">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Daily Claim</div>
+            <div class="claim-section">
+                <div class="claim-text">Claim your daily EBT stipend. Invite friends to multiply earnings.</div>
+                <button class="btn-claim" id="claimBtn" onclick="claimPoints()">+100 Points</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Rewards Catalog</div>
+            <div class="rewards-list">
+                <div class="reward-item">
+                    <div class="reward-name">Titcat</div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="reward-points">10,000,000 EBT Points</div>
+                        <button class="btn-redeem">Redeem</button>
+                    </div>
+                </div>
+                <div class="reward-item">
+                    <div class="reward-name">Bra card</div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="reward-points">75,000 EBT Points</div>
+                        <button class="btn-redeem">Redeem</button>
+                    </div>
+                </div>
+                <div class="reward-item">
+                    <div class="reward-name">Booby credit</div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="reward-points">50,000 EBT Points</div>
+                        <button class="btn-redeem">Redeem</button>
+                    </div>
+                </div>
+                <div class="reward-item">
+                    <div class="reward-name">Rack pack</div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="reward-points">15,000 EBT Points</div>
+                        <button class="btn-redeem">Redeem</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Potential NL Airdrop</div>
+            <div class="airdrop-note">
+                A future NL airdrop may reward participants based on EBT Points and referrals. If eligible, your NL balance could be spendable via your EBT card integration.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let points = 0;
+        let hasClaimed = false;
+
+        function claimPoints() {
+            if (!hasClaimed) {
+                points += 100;
+                document.getElementById('pointsDisplay').textContent = points;
+                document.getElementById('claimBtn').disabled = true;
+                document.getElementById('claimBtn').textContent = 'Claimed!';
+                hasClaimed = true;
+            }
+        }
+
+        function copyLink() {
+            const link = document.getElementById('referralLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
